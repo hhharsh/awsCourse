@@ -1,0 +1,277 @@
+<p>Body Mapping Templates can be confusing, but in the end, they're not that difficult. </p>
+
+<p>You use the <a href="http://velocity.apache.org/" rel="nofollow">Apache Velocity Language</a> when working with these templates, that will only matter once you create more complex transformations though. Basic explanations (see below) should be relatively self-explanatory</p>
+
+
+
+
+
+
+
+<p>First, you need to understand that they<strong> simply allow you to control which data your action receives </strong>(e.g. Lambda).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>You can for example transform incoming data of the following shape:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<pre class="prettyprint linenums">{
+    person: {
+        name: "Max",
+        age: 28
+    },
+    order: {
+        id: "6asdf821ssa"
+    }
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>to </p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<pre class="prettyprint linenums">{
+    personName: "Max",
+    orderId: "6asdf821ssa"
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>with the following template:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<pre class="prettyprint linenums">{
+    "personName": "$input.json('$.person.name')",
+    "orderId": "$input.json('$.order.id')"
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p><code>$input</code>  is a reserved variable, provided by AWS which gives you<strong> access to the input payload</strong> <em>(request body, params, headers</em>) of your request.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>Link: <a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html#input-variable-reference" rel="nofollow">http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html#input-variable-reference</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p><code>json()</code>  is a method on <code>$input</code>  which will retrieve a JSON representation of the data you access. <code>$</code>  here stands for the request body as a whole, <code>$.person.name</code>  therefore accesses the name property on the person property which is part of the whole requests body object.</p>
+
+
+
+
+
+<p>The <code>$input.json(...)</code>  code is wrapped into quotation marks (<code>"</code> ) because it should be transformed into a <strong>string </strong>in this example (since both name and id are strings). If you were to access a number, boolean or object here, you would <strong>NOT wrap the expression in quotation marks</strong>.</p>
+
+
+
+
+
+<p>Example - Accessing a Number:</p>
+
+
+
+
+
+<pre class="prettyprint linenums">{
+    "extractedAge": $input.json('$.person.age')
+}</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>You can learn more about the reserved variables provided by AWS and the different utility functions it offers here: <a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html" rel="nofollow">http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html</a></p>

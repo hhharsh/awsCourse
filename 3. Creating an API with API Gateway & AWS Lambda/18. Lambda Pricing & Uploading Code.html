@@ -1,0 +1,45 @@
+<p>Want to play around with Lambda? It has a very generous free tier - learn more here: <a href="https://aws.amazon.com/lambda/pricing/" rel="nofollow">https://aws.amazon.com/lambda/pricing/</a></p><p>-----</p><p>In the last lecture (and actually in the whole course) we used/ we'll be using the In-line editor AWS Lambda provides. For shorter code snippets, that's convenient.</p>
+
+<p>But for more complex code (as well as my code which can be found attached to the course lectures) you'll probably want to bundle all your code files into a ZIP file and upload that (the course code already is attached as a finished-to-be-uploaded ZIP file though!). </p>
+
+
+
+
+
+
+
+
+
+
+
+<p><strong>Here's how it works</strong> (for JavaScript, adjust the syntax if you're using another language!):</p>
+
+
+
+
+
+
+
+
+
+
+
+<p>1) Create a <strong>root entry file</strong> <strong>+ handler method</strong>. For example an <code>index.js</code>  file with the <code>exports.handler = (event, ...) =&gt; { ... }</code>  method.</p>
+
+
+
+
+
+
+
+<p>If you use a different file name AND/OR different starting handler function, you'll need to adjust your Lambda config! Set <strong>Handler </strong>to <code>[FILENAME].[HANDLER-FUNCTION-NAME]</code>  (default: <code>index.handler</code>).</p>
+
+
+
+<p>2) You <strong>may split your code</strong> over multiple files and import them into the root file via <code>require('file-path')</code> . This is also how you could include other third-party JavaScript (or other languages) packages.</p>
+
+
+
+<p>3) <strong>Select </strong><strong>all files and then zip</strong> them into an archive. <strong>Important: DON'T put them into a folder and zip the folder. This will not work!</strong></p>
+
+<p>4) <strong>Upload </strong>the created zip file to Lambda (<em>"Code" =&gt; "Code entry type" =&gt; "Upload a .ZIP file"</em>)</p>
